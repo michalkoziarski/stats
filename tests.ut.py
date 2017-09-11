@@ -40,7 +40,22 @@ class TestCase(unittest.TestCase):
         self.assertEqual(average_ranks, [1.55, 3.0, 1.45])
 
     def test_nemenyi(self):
-        pass
+        # example from: Japkowicz, Nathalie, and Mohak Shah. Evaluating learning algorithms:
+        # a classification perspective. Cambridge University Press, 2011.
+
+        a = [85.83, 85.91, 86.12, 85.82, 86.28, 86.42, 85.91, 86.10, 85.95, 86.12]
+        b = [75.86, 73.18, 69.08, 74.05, 74.71, 65.90, 76.25, 75.10, 70.50, 73.95]
+        c = [84.19, 85.91, 83.83, 85.11, 86.38, 81.20, 86.38, 86.75, 88.03, 87.18]
+
+        test_statistics, p_values = nemenyi([a, b, c])
+
+        q_1_2 = round(test_statistics[0][1], 2)
+        q_1_3 = round(test_statistics[0][2], 2)
+        q_2_3 = round(test_statistics[1][2], 2)
+
+        self.assertEqual(q_1_2, -32.42)
+        self.assertEqual(q_1_3, 2.24)
+        self.assertEqual(q_2_3, 34.66)
 
 
 if __name__ == '__main__':

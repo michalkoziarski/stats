@@ -147,8 +147,54 @@ def nemenyi(x):
 
     Arguments:
         x: matrix of measurements
+
+    Returns:
+        Matrices of test statistics and corresponding p-values.
     """
-    pass
+
+    k = len(x)  # the number of evaluated methods
+
+    for i in range(k - 1):
+        assert len(x[i]) == len(x[i + 1])
+
+    n = len(x[0])  # the number of domains
+
+    ranks = []
+
+    for j in range(n):
+        row = []
+
+        for i in range(k):
+            row.append(x[i][j])
+
+        ranks.append(_rank(row, order='asc'))
+
+    average_ranks = []  # of methods on all domains
+
+    for i in range(k):
+        average_ranks.append(sum([ranks[j][i] for j in range(n)]) / n)
+
+    test_statistics = []  # test_statistics[i][j] will contain a test statistic for i-th and j-th methods
+    p_values = []  # as above
+
+    for i in range(k):
+        row = []
+
+        for j in range(k):
+            row.append(None)
+
+        test_statistics.append(row)
+        p_values.append(row)
+
+    for i in range(k):
+        for j in range(i + 1, k):
+            # test statistic for i-th and j-th methods
+            q = (average_ranks[i] - average_ranks[j]) * n / sqrt(k * (k + 1) / (6 * n))
+
+            test_statistics[i][j] = q
+            test_statistics[j][i] = q
+
+    return test_statistics, p_values
 
 
 def _rank(x, order):
