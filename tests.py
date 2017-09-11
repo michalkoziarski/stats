@@ -8,6 +8,15 @@ from scipy.special import binom, chdtrc
 from scipy.stats.distributions import norm
 
 
+# References:
+#
+# [1] Japkowicz, Nathalie, and Mohak Shah. Evaluating learning algorithms: a classification perspective.
+#     Cambridge University Press, 2011.
+#
+# [2] Pohlert, Thorsten. The Pairwise Multiple Comparison of Mean Ranks Package (PMCMR).
+#     R package, 2004-2006.
+
+
 def sign(x, y):
     """
     The sign test.
@@ -135,7 +144,7 @@ def friedman(x):
 
     test_statistic = 12 / (n * k * (k + 1)) * sum([(avg_rank * n) ** 2 for avg_rank in average_ranks]) - 3 * n * (k + 1)
 
-    # calculate the p-value based on the survival function
+    # calculate the p-value based on the Chi square survival function
     p = chdtrc(k - 1, test_statistic)
 
     return test_statistic, p, average_ranks
