@@ -136,7 +136,7 @@ def friedman(x):
     test_statistic = 12 / (n * k * (k + 1)) * sum([(avg_rank * n) ** 2 for avg_rank in average_ranks]) - 3 * n * (k + 1)
 
     # calculate the p-value based on the survival function
-    p = 2.0 * chdtrc(k - 1, test_statistic)
+    p = chdtrc(k - 1, test_statistic)
 
     return test_statistic, p, average_ranks
 
